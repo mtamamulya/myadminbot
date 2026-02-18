@@ -1,3 +1,4 @@
+from xmlrpc import client
 import discord
 from discord.ext import commands
 from config import token  # Import the bot's token from configuration file
@@ -40,5 +41,10 @@ async def ban_error(ctx, error):
         await ctx.send("You do not have sufficient permissions to execute this command.")
     elif isinstance(error, commands.MemberNotFound):
         await ctx.send("User not found.")
+
+
+@client.event
+async def on_message(message):
+    await message.channel.send(message.content)
 
 bot.run(token)
